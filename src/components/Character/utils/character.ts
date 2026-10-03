@@ -13,22 +13,23 @@ const setCharacter = (
   dracoLoader.setDecoderPath("/draco/");
   loader.setDRACOLoader(dracoLoader);
 
-  const loadCharacter = async (): Promise<GLTF | null> => {
-    try {
-      const encryptedBlob = await decryptFile(
-        "/models/character.enc?v=2",
-        "MyCharacter12"
-      );
-      const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
+  const loadCharacter = () => {
+    return new Promise<GLTF | null>(async (resolve, reject) => {
+      try {
+        const encryptedBlob = await decryptFile(
+          "/models/character.enc?v=2",
+          "MyCharacter12"
+        );
+        const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
 
-      return new Promise<GLTF | null>((resolve, reject) => {
+        let character: THREE.Object3D;
         loader.load(
           blobUrl,
           async (gltf) => {
-            const character = gltf.scene;
+            character = gltf.scene;
             await renderer.compileAsync(character, camera, scene);
-            character.traverse((child) => {
-              if ((child as THREE.Mesh).isMesh) {
+            character.traverse((child: any) => {
+              if (child.isMesh) {
                 const mesh = child as THREE.Mesh;
 
                 // Change clothing colors to match site theme
@@ -65,11 +66,11 @@ const setCharacter = (
             reject(error);
           }
         );
-      });
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
+      } catch (err) {
+        reject(err);
+        console.error(err);
+      }
+    });
   };
 
   return { loadCharacter };

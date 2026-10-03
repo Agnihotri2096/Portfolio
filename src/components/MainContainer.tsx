@@ -1,13 +1,13 @@
 import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
-import Navbar from "./Navbar";
-import Landing from "./Landing";
-import Work from "./Work";
-import AgnihotriLabs from "./AgnihotriLabs";
-import HowWeBuild from "./HowWeBuild";
 import About from "./About";
+import Career from "./Career";
 import Contact from "./Contact";
 import Cursor from "./Cursor";
+import Landing from "./Landing";
+import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
+import WhatIDo from "./WhatIDo";
+import Work from "./Work";
 import setSplitText from "./utils/splitText";
 
 const TechStack = lazy(() => import("./TechStack"));
@@ -39,12 +39,12 @@ const MainContainer = ({ children }: PropsWithChildren) => {
         <div id="smooth-content">
           <div className="container-main">
             <Landing>{!isDesktopView && children}</Landing>
-            <Work />
-            <AgnihotriLabs />
-            <HowWeBuild />
             <About />
+            <WhatIDo />
+            <Career />
+            <Work />
             {isDesktopView && (
-              <Suspense fallback={<div className="loading-fallback">Loading focus radar...</div>}>
+              <Suspense fallback={<div>Loading....</div>}>
                 <TechStack />
               </Suspense>
             )}

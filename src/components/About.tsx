@@ -1,48 +1,19 @@
 import "./styles/About.css";
 
-const interests = [
-  "AI & LLM Architecture",
-  "Software Engineering",
-  "Cybersecurity",
-  "Linux & Systems",
-  "Telemetry & Networks",
-  "Continuous Experimentation",
-  "Building Products",
-];
-
 const About = () => {
   return (
-    <section className="about-section" id="about">
+    <div className="about-section" id="about">
       <div className="about-me">
-        <div className="section-label">
-          <span className="label-dot"></span>
-          BEHIND THE LAB
-        </div>
-        <h2 className="about-headline">
-          BUILT BY <span>AKSHAT.</span>
-        </h2>
-        <p className="about-lead">
-          Agnihotri Labs is an independent technology studio conceived and built by Akshat Agnihotri—an
-          engineering student and builder exploring the convergence of intelligent systems, defensive security,
-          and robust software engineering.
-        </p>
+        <h3 className="title">About Me</h3>
         <p className="para">
-          Rather than chasing buzzwords or corporate scale, the studio is rooted in hands-on craftsmanship:
-          understanding protocols from the packet level, evaluating machine intelligence with local weights,
-          and engineering performant, maintainable software tools.
+          I'm an engineering student passionate about software architecture, algorithms, and computing technologies. I enjoy exploring how systems work and building efficient, scalable solutions through continuous learning and experimentation.
+          <br /><br />
+          Beyond academics, I actively participate in hackathons and project teams, valuing collaboration, discipline, and logical problem-solving.
+          <br /><br />
+          My goal is to bridge theoretical concepts with real-world applications, constantly pushing boundaries to grow into an innovative and competent software engineer.
         </p>
-        <div className="about-interests">
-          <span className="interests-label">CORE PURSUITS:</span>
-          <div className="interests-flex">
-            {interests.map((item, idx) => (
-              <span className="interest-tag" key={idx}>
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

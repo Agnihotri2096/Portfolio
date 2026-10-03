@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
@@ -8,11 +8,7 @@ import "./styles/Navbar.css";
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
-export const getSmoother = () => smoother;
-
 const Navbar = () => {
-  const [activeContext, setActiveContext] = useState<"personal" | "labs">("personal");
-
   useEffect(() => {
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -27,96 +23,39 @@ const Navbar = () => {
     smoother.scrollTop(0);
     smoother.paused(true);
 
-    const links = document.querySelectorAll(".header ul a, .nav-context-btn");
+    let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
-      const element = elem as HTMLAnchorElement;
+      let element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
-        const target = e.currentTarget as HTMLAnchorElement;
-        const section = target.getAttribute("data-href");
-        if (section) {
-          if (section === "#labs") {
-            setActiveContext("labs");
-          } else if (section === "#landingDiv" || section === "#about") {
-            setActiveContext("personal");
-          }
-          if (window.innerWidth > 1024 && smoother) {
-            e.preventDefault();
-            smoother.scrollTo(section, true, "top top");
-          } else {
-            const el = document.querySelector(section);
-            if (el) {
-              e.preventDefault();
-              el.scrollIntoView({ behavior: "smooth" });
-            }
-          }
+        if (window.innerWidth > 1024) {
+          e.preventDefault();
+          let elem = e.currentTarget as HTMLAnchorElement;
+          let section = elem.getAttribute("data-href");
+          smoother.scrollTo(section, true, "top top");
         }
       });
     });
-
-    const handleResize = () => {
+    window.addEventListener("resize", () => {
       ScrollSmoother.refresh(true);
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    });
   }, []);
-
-  const handleContextClick = (context: "personal" | "labs", targetId: string) => {
-    setActiveContext(context);
-    if (window.innerWidth > 1024 && smoother) {
-      smoother.scrollTo(targetId, true, "top top");
-    } else {
-      const el = document.querySelector(targetId);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
   return (
     <>
-      <header className="header">
-        <div className="navbar-left">
-          <a href="#landingDiv" data-href="#landingDiv" className="navbar-brand" data-cursor="disable">
-            <span className="brand-primary">AKSHAT AGNIHOTRI</span>
-            <span className="brand-badge">LABS</span>
-          </a>
-
-          {/* Subtle Desktop Context Switcher */}
-          <div className="nav-context-pill">
-            <button
-              type="button"
-              className={`nav-context-btn ${activeContext === "personal" ? "active" : ""}`}
-              onClick={() => handleContextClick("personal", "#landingDiv")}
-              data-cursor="disable"
-            >
-              Akshat
-            </button>
-            <button
-              type="button"
-              className={`nav-context-btn ${activeContext === "labs" ? "active" : ""}`}
-              onClick={() => handleContextClick("labs", "#labs")}
-              data-cursor="disable"
-            >
-              Labs
-            </button>
-          </div>
-        </div>
-
+      <div className="header">
+        <a href="/#" className="navbar-title" data-cursor="disable">
+          AA
+        </a>
         <a
-          href="mailto:hello@agnihotrilabs.tech"
+          href="mailto:agnihotriakshat6759@gmail.com"
           className="navbar-connect"
           data-cursor="disable"
         >
-          hello@agnihotrilabs.tech
+          agnihotriakshat6759@gmail.com
         </a>
-
         <ul>
           <li>
-            <a data-href="#landingDiv" href="#landingDiv">
-              <HoverLinks text="AKSHAT" />
+            <a data-href="#about" href="#about">
+              <HoverLinks text="ABOUT" />
             </a>
           </li>
           <li>
@@ -125,22 +64,12 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a data-href="#labs" href="#labs">
-              <HoverLinks text="LABS" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#about" href="#about">
-              <HoverLinks text="ABOUT" />
-            </a>
-          </li>
-          <li>
             <a data-href="#contact" href="#contact">
               <HoverLinks text="CONTACT" />
             </a>
           </li>
         </ul>
-      </header>
+      </div>
 
       <div className="landing-circle1"></div>
       <div className="landing-circle2"></div>

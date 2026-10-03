@@ -167,27 +167,8 @@ const TechStack = () => {
   }, []);
 
   return (
-    <div className="techstack" id="exploring">
-      <div className="exploring-header">
-        <div className="section-label">
-          <span className="label-dot"></span>
-          ACTIVE RESEARCH & EXPERIMENTS
-        </div>
-        <h2>CURRENTLY EXPLORING</h2>
-        <div className="exploring-tags-banner">
-          <span>AI</span>
-          <span className="dot">•</span>
-          <span>CYBERSECURITY</span>
-          <span className="dot">•</span>
-          <span>LOCAL AI</span>
-          <span className="dot">•</span>
-          <span>AUTOMATION</span>
-          <span className="dot">•</span>
-          <span>LINUX</span>
-          <span className="dot">•</span>
-          <span>3D WEB</span>
-        </div>
-      </div>
+    <div className="techstack">
+      <h2> My Techstack</h2>
 
       <Canvas
         shadows
