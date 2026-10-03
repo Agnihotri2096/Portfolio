@@ -1,0 +1,135 @@
+.labs-transition-section {
+  position: relative;
+  width: 100%;
+  padding: 140px 0 120px;
+  background-color: var(--backgroundColor);
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.labs-transition-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.labs-transition-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+.labs-transition-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  background: rgba(94, 234, 212, 0.05);
+  font-family: "Geist", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accentColor);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.labs-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #5eead4;
+  box-shadow: 0 0 8px #5eead4;
+}
+
+.labs-transition-title {
+  font-family: "Geist", sans-serif;
+  font-size: clamp(38px, 6vw, 68px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.labs-transition-title span {
+  color: var(--accentColor);
+}
+
+.labs-transition-tagline {
+  font-family: "Geist", sans-serif;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 500;
+  letter-spacing: 5px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.labs-transition-desc {
+  font-family: "Geist", sans-serif;
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-weight: 300;
+  line-height: 1.6;
+  color: #adacac;
+  max-width: 680px;
+  margin: 0 auto 36px;
+}
+
+.labs-transition-action {
+  display: flex;
+  justify-content: center;
+}
+
+.labs-transition-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 4px;
+  border: 1px solid var(--accentColor);
+  background: rgba(94, 234, 212, 0.08);
+  color: #ffffff;
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.labs-transition-cta:hover {
+  background: var(--accentColor);
+  color: #050810;
+  box-shadow: 0 0 25px rgba(94, 234, 212, 0.3);
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 768px) {
+  .labs-transition-section {
+    padding: 90px 0 80px;
+  }
+}

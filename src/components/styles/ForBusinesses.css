@@ -1,0 +1,162 @@
+.for-businesses-section {
+  position: relative;
+  width: 100%;
+  padding: 100px 0 120px;
+  background-color: var(--backgroundColor);
+  overflow: hidden;
+}
+
+.for-businesses-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+.for-businesses-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.for-businesses-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(94, 234, 212, 0.25);
+  background: rgba(94, 234, 212, 0.04);
+  font-family: "Geist", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accentColor);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.for-businesses-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #5eead4;
+}
+
+.for-businesses-header h2 {
+  font-family: "Geist", sans-serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.for-businesses-subhead {
+  font-family: "Geist", sans-serif;
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 300;
+  line-height: 1.6;
+  color: #adacac;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.for-businesses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 48px;
+}
+
+.for-businesses-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 36px 28px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.for-businesses-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(94, 234, 212, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card-num {
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accentColor);
+  margin-bottom: 16px;
+}
+
+.for-businesses-card h3 {
+  font-family: "Geist", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+}
+
+.for-businesses-card p {
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 300;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.for-businesses-cta-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.for-businesses-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 4px;
+  border: 1px solid var(--accentColor);
+  background: rgba(94, 234, 212, 0.08);
+  color: #ffffff;
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.for-businesses-cta:hover {
+  background: var(--accentColor);
+  color: #050810;
+  box-shadow: 0 0 25px rgba(94, 234, 212, 0.3);
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 900px) {
+  .for-businesses-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .for-businesses-card {
+    padding: 28px 24px;
+  }
+}

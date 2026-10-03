@@ -262,6 +262,49 @@ h2.landing-info-h2 {
   left: 0;
 }
 
+.landing-studio-tag {
+  margin-top: 18px;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--textColor);
+  opacity: 0.8;
+  font-weight: 400;
+  font-family: "Geist", sans-serif;
+}
+
+.landing-studio-tag span {
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.landing-lab-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  border-radius: 4px;
+  background: rgba(94, 234, 212, 0.05);
+  color: #5eead4;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Geist", sans-serif;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.landing-lab-cta:hover {
+  background: rgba(94, 234, 212, 0.15);
+  border-color: #5eead4;
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
 @media screen and (min-width: 500px) {
   .landing-circle2 {
     display: block;

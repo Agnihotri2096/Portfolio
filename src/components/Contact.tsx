@@ -5,17 +5,36 @@ const Contact = () => {
   return (
     <div className="contact-section section-container" id="contact">
       <div className="contact-container">
-        <h3>Contact</h3>
+        <div className="contact-header-wrap">
+          <h3>LET'S BUILD SOMETHING.</h3>
+          <ul className="contact-prompts">
+            <li>Have an idea?</li>
+            <li>Need a website?</li>
+            <li>Want to automate something?</li>
+            <li>Have a problem worth solving?</li>
+          </ul>
+        </div>
         <div className="contact-flex">
           <div className="contact-box">
-            <h4>Email</h4>
+            <h4>Studio Inquiries</h4>
             <p>
-              <a href="mailto:agnihotriakshat6759@gmail.com" data-cursor="disable">
+              <a
+                href="mailto:hello@agnihotrilabs.tech"
+                data-cursor="disable"
+                className="primary-email"
+              >
+                hello@agnihotrilabs.tech
+              </a>
+            </p>
+            <h4>Direct Engineering</h4>
+            <p>
+              <a
+                href="mailto:agnihotriakshat6759@gmail.com"
+                data-cursor="disable"
+              >
                 agnihotriakshat6759@gmail.com
               </a>
             </p>
-            <h4>Education</h4>
-            <p>Engineering Student</p>
           </div>
           <div className="contact-box">
             <h4>Social</h4>
@@ -46,11 +65,13 @@ const Contact = () => {
           </div>
           <div className="contact-box">
             <h2>
-              Designed and Developed <br /> by <span>Akshat Agnihotri</span>
+              AGNIHOTRI <span>LABS</span>
             </h2>
-            <h5>
-              <MdCopyright /> 2025
-            </h5>
+            <p className="footer-tagline">Build. Automate. Secure.</p>
+            <h5>Built by Akshat Agnihotri</h5>
+            <span className="footer-copyright">
+              <MdCopyright /> 2026
+            </span>
           </div>
         </div>
       </div>
