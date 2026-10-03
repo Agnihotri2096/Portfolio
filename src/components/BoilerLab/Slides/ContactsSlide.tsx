@@ -93,8 +93,8 @@ const ContactsSlide = ({
             </a>
           </p>
 
-            2026, Agnihotri Labs
-          </p>
+            
+          
         </div>
       </div>
     </section>
