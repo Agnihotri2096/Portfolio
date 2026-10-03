@@ -40,11 +40,7 @@ const SiteHeader = ({ onGoHome }: SiteHeaderProps) => {
         </div>
       </div>
 
-      {/* Status badge on the right */}
-      <div className="header-badge">
-        <span className="pulse-dot"></span>
-        <span>LAB ACTIVE • 2026</span>
-      </div>
+
     </header>
   );
 };

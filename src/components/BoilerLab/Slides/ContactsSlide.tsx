@@ -92,7 +92,7 @@ const ContactsSlide = ({
               github.com/Agnihotri-Labs
             </a>
           </p>
-          <p className="subtitle" style={{ fontSize: "0.75rem", opacity: 0.6, marginTop: "0.5rem" }}>
+
             2026, Agnihotri Labs
           </p>
         </div>
