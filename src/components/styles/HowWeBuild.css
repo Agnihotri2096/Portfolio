@@ -1,0 +1,124 @@
+/* ── How We Build Section ── */
+.how-section {
+  position: relative;
+  z-index: 1;
+  background-color: var(--backgroundColor);
+  padding: 80px 0 100px;
+  border-top: 1px dashed var(--borderColor);
+}
+
+.how-header {
+  margin-bottom: 50px;
+}
+
+.how-title {
+  font-size: clamp(34px, 4.5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+  color: var(--textColor);
+}
+
+.how-title span {
+  color: var(--accentColor);
+}
+
+.how-subtitle {
+  font-size: 15px;
+  color: var(--textColorMuted);
+  margin: 0;
+  max-width: 580px;
+  line-height: 1.6;
+}
+
+/* ── Timeline ── */
+.how-timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  position: relative;
+}
+
+.how-step {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.step-num-wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.step-num {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accentColor);
+  background: #ffffff;
+  border: 1px solid var(--borderColor);
+  border-radius: 8px;
+  padding: 6px 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  z-index: 2;
+}
+
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--borderColor);
+  margin-left: 8px;
+  margin-right: -8px;
+  z-index: 1;
+}
+
+.step-content {
+  background: #ffffff;
+  border: 1px solid var(--borderColor);
+  border-radius: 10px;
+  padding: 22px 18px;
+  flex: 1;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.step-content:hover {
+  border-color: var(--accentColor);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(2, 132, 199, 0.07);
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--textColor);
+  margin: 0 0 8px;
+}
+
+.step-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--textColorMuted);
+  margin: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .how-timeline {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 30px;
+  }
+
+  .step-connector {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .how-timeline {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

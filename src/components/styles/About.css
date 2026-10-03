@@ -1,0 +1,94 @@
+.about-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  opacity: 1;
+  height: auto;
+  width: var(--cWidth);
+  margin: auto;
+  padding: 80px 0;
+}
+
+.about-me {
+  padding: 40px 0px;
+  width: 580px;
+  max-width: 100%;
+}
+
+.about-headline {
+  font-size: clamp(34px, 4.5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+  color: var(--textColor);
+}
+
+.about-headline span {
+  color: var(--accentColor);
+}
+
+.about-lead {
+  font-size: clamp(16px, 1.3vw, 19px);
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--textColor);
+  margin: 0 0 16px;
+}
+
+.about-me .para {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--textColorMuted);
+  margin: 0 0 24px;
+}
+
+.about-interests {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--borderColor);
+}
+
+.interests-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.interests-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.interest-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--textColor);
+  background: #ffffff;
+  border: 1px solid var(--borderColor);
+  padding: 5px 12px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+@media only screen and (min-width: 1025px) {
+  .about-section {
+    width: var(--cWidth);
+    justify-content: flex-end;
+    max-width: 1920px;
+    min-height: var(--vh);
+    padding: 0px;
+    opacity: 1;
+  }
+
+  .about-me {
+    padding: 0px;
+    width: 52%;
+    max-width: 640px;
+  }
+}

@@ -1,19 +1,45 @@
-# My Portfolio Wesbite - Overview 🚀
+# Agnihotri Labs — AI, Automation & Software
 
-This repository contains the open source version of my porfolio website.
-Do check it out!
+The official unified website for **Agnihotri Labs** and personal portfolio of **Akshat Agnihotri**.
 
-## Instructions 🛠️
+> **Build. Automate. Secure.**  
+> AI, automation and software solutions for modern businesses.
 
-I have modified the gsap club plugins with the trial plugins, but with the trial plugin you cannot host it🔴. So for Club plugins, Check out here: https://gsap.com/docs/v3/Installation/
+- **Primary Domain**: [https://agnihotrilabs.tech/](https://agnihotrilabs.tech/)
+- **Founder / Builder**: Akshat Agnihotri (AI • Software • Security)
 
-**Techstack** - React, TypeScript, GSAP, ThreeJS, WebGL, HTML, Css, JavaScript
+---
 
-![Portfolio-Preview](public/images/preview.png)
+## 🛠️ Tech Stack
 
-## License
+- **Framework**: React 18, TypeScript, Vite
+- **3D & Graphics**: Three.js, WebGL, React Three Fiber, Rapier Physics
+- **Animation**: GSAP (ScrollSmoother, ScrollTrigger, SplitText)
+- **Styling**: Warm editorial design system, CSS3
+
+---
+
+## 🚀 Development & Build
+
+```bash
+# Install dependencies
+npm install
+
+# Run local development server
+npm run dev
+
+# Run linter
+npm run lint
+
+# Build production bundle
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+---
+
+## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
-# Portfolio
-# Portfolio
-# Portfolio
