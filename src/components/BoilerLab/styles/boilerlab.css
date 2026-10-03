@@ -1669,3 +1669,43 @@ html, body {
     width: 105vw;
   }
 }
+/* Mobile responsive overrides */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 0.75rem 1.5rem;
+    height: var(--header-height-mobile);
+  }
+  .site-footer {
+    padding: 0.75rem 1.5rem;
+    height: var(--footer-height-mobile);
+  }
+  .slide-inner {
+    padding: 3rem 2rem;
+  }
+  .hero-content {
+    gap: 1rem;
+  }
+  .eyebrow {
+    font-size: clamp(2rem, 6vw, 4rem);
+  }
+  .subtitle {
+    font-size: clamp(0.75rem, 3vw, 1rem);
+    max-width: 90vw;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .contacts-content {
+    text-align: center;
+    padding: 0 1rem;
+  }
+  .contacts-details .subtitle {
+    font-size: 0.8rem;
+  }
+  .portfolio-pill-button {
+    margin: 0.5rem auto;
+    display: inline-flex;
+  }
+}
+
