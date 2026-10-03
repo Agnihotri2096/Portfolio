@@ -3,79 +3,105 @@ import "./styles/Contact.css";
 
 const Contact = () => {
   return (
-    <div className="contact-section section-container" id="contact">
+    <footer className="contact-section section-container" id="contact">
       <div className="contact-container">
         <div className="contact-header-wrap">
-          <h3>LET'S BUILD SOMETHING.</h3>
+          <div className="contact-badge">
+            <span className="badge-pulse"></span>
+            GET IN TOUCH
+          </div>
+          <h2 className="contact-main-title">LET'S BUILD SOMETHING.</h2>
+          <p className="contact-subhead">
+            Have an idea, problem or system that needs to be built? Let's talk.
+          </p>
+
           <ul className="contact-prompts">
-            <li>Have an idea?</li>
-            <li>Need a website?</li>
-            <li>Want to automate something?</li>
-            <li>Have a problem worth solving?</li>
+            <li>Have a product architecture in mind?</li>
+            <li>Need high-performance software built?</li>
+            <li>Want to automate complex workflows with AI?</li>
+            <li>Need technical security tooling?</li>
           </ul>
         </div>
+
         <div className="contact-flex">
           <div className="contact-box">
-            <h4>Studio Inquiries</h4>
+            <h4>Primary Studio Inquiries</h4>
             <p>
               <a
                 href="mailto:hello@agnihotrilabs.tech"
-                data-cursor="disable"
+                data-cursor="email"
                 className="primary-email"
               >
                 hello@agnihotrilabs.tech
               </a>
             </p>
-            <h4>Direct Engineering</h4>
+
+            <h4 className="contact-secondary-heading">Official Website</h4>
             <p>
               <a
-                href="mailto:agnihotriakshat6759@gmail.com"
-                data-cursor="disable"
+                href="https://agnihotrilabs.tech/"
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="open"
+                className="website-link"
               >
-                agnihotriakshat6759@gmail.com
+                agnihotrilabs.tech
               </a>
             </p>
           </div>
+
           <div className="contact-box">
-            <h4>Social</h4>
+            <h4>Networks &amp; Profiles</h4>
             <a
-              href="https://github.com/Agnihotri2096"
+              href="https://github.com/Agnihotri-Labs"
               target="_blank"
-              data-cursor="disable"
+              rel="noreferrer"
+              data-cursor="open"
               className="contact-social"
             >
-              Github <MdArrowOutward />
+              GitHub (Agnihotri-Labs) <MdArrowOutward />
             </a>
             <a
               href="https://www.linkedin.com/in/akshat-agnihotri/"
               target="_blank"
-              data-cursor="disable"
+              rel="noreferrer"
+              data-cursor="open"
               className="contact-social"
             >
-              Linkedin <MdArrowOutward />
+              LinkedIn (Akshat Agnihotri) <MdArrowOutward />
             </a>
             <a
               href="https://x.com/_Agnihotri_"
               target="_blank"
-              data-cursor="disable"
+              rel="noreferrer"
+              data-cursor="open"
               className="contact-social"
             >
-              Twitter <MdArrowOutward />
+              Twitter / X <MdArrowOutward />
             </a>
           </div>
-          <div className="contact-box">
-            <h2>
-              AGNIHOTRI <span>LABS</span>
-            </h2>
-            <p className="footer-tagline">Build. Automate. Secure.</p>
-            <h5>Built by Akshat Agnihotri</h5>
+
+          <div className="contact-box brand-footer-box">
+            <div className="footer-brand-title">
+              <img
+                src="/logo-mark.svg"
+                alt="Agnihotri Labs"
+                className="footer-logo-img"
+              />
+              <h2>
+                AGNIHOTRI <span>LABS</span>
+              </h2>
+            </div>
+            <p className="footer-tagline">BUILD. AUTOMATE. SECURE.</p>
+            <p className="footer-desc">Independent technology studio.</p>
+            <h5 className="footer-founder">Built by Akshat Agnihotri</h5>
             <span className="footer-copyright">
-              <MdCopyright /> 2026
+              <MdCopyright /> 2026 Agnihotri Labs
             </span>
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

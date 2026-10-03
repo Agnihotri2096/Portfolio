@@ -1,14 +1,14 @@
 import { PropsWithChildren } from "react";
 import "./styles/Landing.css";
-import { smoother } from "./Navbar";
+import { smoother } from "./utils/smoother";
 
 const Landing = ({ children }: PropsWithChildren) => {
   const handleScrollToLab = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (smoother) {
-      smoother.scrollTo("#agnihotri-labs", true, "top top");
+      smoother.scrollTo("#what-we-build", true, "top top");
     } else {
-      const el = document.getElementById("agnihotri-labs");
+      const el = document.getElementById("what-we-build");
       el?.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -18,28 +18,28 @@ const Landing = ({ children }: PropsWithChildren) => {
       <div className="landing-section" id="landingDiv">
         <div className="landing-container">
           <div className="landing-intro">
-            <h2>Hello! I'm</h2>
+            <h2>BUILD. AUTOMATE. SECURE.</h2>
             <h1>
-              AKSHAT
+              AGNIHOTRI
               <br />
-              <span>AGNIHOTRI</span>
+              <span>LABS</span>
             </h1>
           </div>
           <div className="landing-info">
-            <h3>I BUILD DIGITAL THINGS.</h3>
+            <h3>Digital Engineering</h3>
             <h2 className="landing-info-h2">
-              <div className="landing-h2-1">AI • SOFTWARE</div>
-              <div className="landing-h2-2">SECURITY</div>
+              <div className="landing-h2-1">AI • Software</div>
+              <div className="landing-h2-2">Security</div>
             </h2>
             <h2>
-              <div className="landing-h2-info">SECURITY</div>
-              <div className="landing-h2-info-1">AI • SOFTWARE</div>
+              <div className="landing-h2-info">Security</div>
+              <div className="landing-h2-info-1">AI • Software</div>
             </h2>
             <div className="landing-studio-tag">
-              Founder of <span>AGNIHOTRI LABS</span>
+              Founded by <span>Akshat Agnihotri</span>
             </div>
             <a
-              href="#agnihotri-labs"
+              href="#what-we-build"
               className="landing-lab-cta"
               onClick={handleScrollToLab}
               data-cursor="disable"

@@ -25,12 +25,12 @@ const WhatIDo = () => {
     };
   }, []);
   return (
-    <div className="whatIDO" id="what-i-build">
+    <div className="whatIDO" id="what-we-build">
       <div className="what-box">
         <h2 className="title">
           W<span className="hat-h2">HAT</span>
           <div>
-            I<span className="do-h2"> BUILD</span>
+            W<span className="do-h2">E BUILD</span>
           </div>
         </h2>
       </div>
@@ -87,18 +87,20 @@ const WhatIDo = () => {
             <div className="what-corner"></div>
 
             <div className="what-content-in">
-              <h3>01 WEB</h3>
-              <h4>Modern Web Experiences</h4>
+              <h3>AI & AUTOMATION</h3>
+              <h4>Intelligent Systems & Workflows</h4>
               <p>
-                Business websites, landing pages and web experiences. Fast, responsive, and tailored to modern standards.
+                Developing applied machine learning pipelines, LLM-powered agent workflows,
+                and automated microservices that eliminate manual operational bottlenecks.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Pillars & Technologies</h5>
               <div className="what-content-flex">
-                <div className="what-tags">Next.js</div>
-                <div className="what-tags">React</div>
-                <div className="what-tags">TypeScript</div>
-                <div className="what-tags">TailwindCSS</div>
-                <div className="what-tags">Vercel</div>
+                <div className="what-tags">Applied ML</div>
+                <div className="what-tags">Python</div>
+                <div className="what-tags">LLM Agents</div>
+                <div className="what-tags">FastAPI</div>
+                <div className="what-tags">Workflow Automation</div>
+                <div className="what-tags">Data Pipelines</div>
               </div>
               <div className="what-arrow"></div>
             </div>
@@ -122,87 +124,20 @@ const WhatIDo = () => {
             </div>
             <div className="what-corner"></div>
             <div className="what-content-in">
-              <h3>02 AUTOMATION</h3>
-              <h4>Streamlined Workflows</h4>
+              <h3>SOFTWARE & SECURITY</h3>
+              <h4>Robust Architecture & Cyber Defense</h4>
               <p>
-                Digital workflows that eliminate repetitive work. Connecting data sources, APIs, and business operations.
+                Architecting resilient web applications, high-throughput cloud backends,
+                security audit tooling, and secure API infrastructure built for scale.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Pillars & Technologies</h5>
               <div className="what-content-flex">
-                <div className="what-tags">Python</div>
-                <div className="what-tags">APIs & Webhooks</div>
-                <div className="what-tags">Automation Scripts</div>
-                <div className="what-tags">Data Pipelines</div>
-              </div>
-              <div className="what-arrow"></div>
-            </div>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 2)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
-            <div className="what-corner"></div>
-            <div className="what-content-in">
-              <h3>03 AI</h3>
-              <h4>Practical AI Tools</h4>
-              <p>
-                Practical AI tools, assistants and intelligent workflows. Local models, embeddings, and real task assistance.
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">Local LLMs</div>
-                <div className="what-tags">Ollama</div>
-                <div className="what-tags">FastAPI</div>
-                <div className="what-tags">PyTorch</div>
-                <div className="what-tags">AI Agents</div>
-              </div>
-              <div className="what-arrow"></div>
-            </div>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 3)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
-            <div className="what-corner"></div>
-            <div className="what-content-in">
-              <h3>04 SOFTWARE</h3>
-              <h4>Custom Tools & Systems</h4>
-              <p>
-                Custom tools and experimental software systems. Built for performance, security, and specific operational needs.
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">Linux / Arch</div>
-                <div className="what-tags">C / C++</div>
-                <div className="what-tags">Python</div>
-                <div className="what-tags">SQLite</div>
-                <div className="what-tags">Telemetry</div>
+                <div className="what-tags">Full-Stack Web</div>
+                <div className="what-tags">TypeScript</div>
+                <div className="what-tags">React / Next</div>
+                <div className="what-tags">Cyber Defense</div>
+                <div className="what-tags">Linux / Docker</div>
+                <div className="what-tags">API Security</div>
               </div>
               <div className="what-arrow"></div>
             </div>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
-
 import Marquee from "react-fast-marquee";
 
 const Loading = ({ percent }: { percent: number }) => {
@@ -10,7 +9,7 @@ const Loading = ({ percent }: { percent: number }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  if (percent >= 100) {
+  if (percent >= 100 && !loaded) {
     setTimeout(() => {
       setLoaded(true);
       setTimeout(() => {
@@ -31,7 +30,7 @@ const Loading = ({ percent }: { percent: number }) => {
         }, 50);
       }
     });
-  }, [isLoaded]);
+  }, [isLoaded, setIsLoading]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const { currentTarget: target } = e;
@@ -46,9 +45,10 @@ const Loading = ({ percent }: { percent: number }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          AA
+          <img src="/logo-mark.svg" alt="Agnihotri Labs" className="loader-logo-img" />
+          <span>AGNIHOTRI <strong>LABS</strong></span>
         </a>
-        <div className={`loaderGame ${clicked && "loader-out"}`}>
+        <div className={`loaderGame ${clicked ? "loader-out" : ""}`}>
           <div className="loaderGame-container">
             <div className="loaderGame-in">
               {[...Array(27)].map((_, index) => (
@@ -61,27 +61,29 @@ const Loading = ({ percent }: { percent: number }) => {
       </div>
       <div className="loading-screen">
         <div className="loading-marquee">
-          <Marquee>
-            <span> Engineering Student</span> <span>Tech Enthusiast</span>
-            <span> Engineering Student</span> <span>Tech Enthusiast</span>
+          <Marquee speed={40}>
+            <span>DIGITAL ENGINEERING LAB</span>
+            <span>BUILD. AUTOMATE. SECURE.</span>
+            <span>AI SYSTEMS &amp; CYBERSECURITY</span>
+            <span>AGNIHOTRI LABS</span>
           </Marquee>
         </div>
         <div
-          className={`loading-wrap ${clicked && "loading-clicked"}`}
-          onMouseMove={(e) => handleMouseMove(e)}
+          className={`loading-wrap ${clicked ? "loading-clicked" : ""}`}
+          onMouseMove={handleMouseMove}
         >
           <div className="loading-hover"></div>
-          <div className={`loading-button ${loaded && "loading-complete"}`}>
+          <div className={`loading-button ${loaded ? "loading-complete" : ""}`}>
             <div className="loading-container">
               <div className="loading-content">
                 <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
+                  INITIALIZING STUDIO <span>{percent}%</span>
                 </div>
               </div>
               <div className="loading-box"></div>
             </div>
             <div className="loading-content2">
-              <span>Welcome</span>
+              <span>ENTER LAB</span>
             </div>
           </div>
         </div>
@@ -97,7 +99,7 @@ export const setProgress = (setLoading: (value: number) => void) => {
 
   let interval = setInterval(() => {
     if (percent <= 50) {
-      let rand = Math.round(Math.random() * 20) + 10;
+      const rand = Math.round(Math.random() * 20) + 10;
       percent = percent + rand;
       setLoading(percent);
     } else {

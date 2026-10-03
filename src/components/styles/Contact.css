@@ -7,56 +7,11 @@
   background-color: var(--backgroundColor);
 }
 
-.contact-header-wrap {
-  margin-bottom: 50px;
-}
-
 .contact-section h3 {
-  font-size: clamp(34px, 5.5vw, 60px);
-  font-weight: 600;
+  font-size: 60px;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: -0.5px;
-  color: #ffffff;
   margin: 0;
-}
-
-.contact-prompts {
-  list-style: none;
-  padding: 0;
-  margin: 16px 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-}
-
-.contact-prompts li {
-  font-family: "Geist", sans-serif;
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--accentColor);
-  letter-spacing: 0.5px;
-}
-
-.primary-email {
-  color: var(--accentColor) !important;
-  font-weight: 500;
-}
-
-.footer-tagline {
-  font-size: 13px;
-  color: #adacac;
-  letter-spacing: 1px;
-  margin: 6px 0 10px !important;
-  text-transform: uppercase;
-}
-
-.footer-copyright {
-  font-size: 13px;
-  color: #6b7280;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
 }
 
 .contact-flex {

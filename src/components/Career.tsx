@@ -1,73 +1,56 @@
 import "./styles/Career.css";
 
-const journeySteps = [
-  {
-    step: "01",
-    title: "ENGINEERING",
-    subtitle: "Core Foundations",
-    description:
-      "Algorithms, data structures, operating systems, and computer science fundamentals. Building a rigorous engineering base.",
-  },
-  {
-    step: "02",
-    title: "AI & DATA",
-    subtitle: "Machine Learning & Local Models",
-    description:
-      "Practical machine learning, neural architectures, data processing pipelines, and local LLM orchestration with Ollama.",
-  },
-  {
-    step: "03",
-    title: "SOFTWARE",
-    subtitle: "Full-Stack & Systems",
-    description:
-      "Modern responsive web applications, REST APIs, Linux system configuration, and performance engineering.",
-  },
-  {
-    step: "04",
-    title: "CYBERSECURITY",
-    subtitle: "Security & Risk Intelligence",
-    description:
-      "FAIR cyber risk quantification, network telemetry analysis, vulnerability assessment, and defense architectures.",
-  },
-  {
-    step: "05",
-    title: "REAL PROJECTS",
-    subtitle: "Practical Implementations",
-    description:
-      "Translating skills into usable platforms: CyberRisk IQ risk platform, NetSonar telemetry sonification, and deployed tools.",
-  },
-  {
-    step: "06",
-    title: "AGNIHOTRI LABS",
-    subtitle: "Independent Studio",
-    description:
-      "Unifying engineering, automation, AI, and software development into an independent technology studio for modern businesses.",
-  },
-];
-
 const Career = () => {
   return (
-    <div className="career-section section-container" id="journey">
+    <div className="career-section section-container" id="career">
       <div className="career-container">
         <h2>
-          THE <span>JOURNEY</span>
+          Our journey <span>&</span>
+          <br /> milestones
         </h2>
         <div className="career-info">
           <div className="career-timeline">
             <div className="career-dot"></div>
           </div>
-          {journeySteps.map((item, index) => (
-            <div className="career-info-box" key={index}>
-              <div className="career-info-in">
-                <div className="career-role">
-                  <h4>{item.title}</h4>
-                  <h5>{item.subtitle}</h5>
-                </div>
-                <h3>{item.step}</h3>
+          <div className="career-info-box">
+            <div className="career-info-in">
+              <div className="career-role">
+                <h4>Agnihotri Labs</h4>
+                <h5>Independent Studio</h5>
               </div>
-              <p>{item.description}</p>
+              <h3>PRESENT</h3>
             </div>
-          ))}
+            <p>
+              Founded by Akshat Agnihotri. Building practical software architectures,
+              intelligent AI integrations, automated workflows, and security-hardened technology.
+            </p>
+          </div>
+          <div className="career-info-box">
+            <div className="career-info-in">
+              <div className="career-role">
+                <h4>System Architecture</h4>
+                <h5>Engineering & R&D</h5>
+              </div>
+              <h3>2024</h3>
+            </div>
+            <p>
+              Architecting full-stack web platforms, threat analysis tooling, and
+              integrating modern ML pipelines with high performance and reliability.
+            </p>
+          </div>
+          <div className="career-info-box">
+            <div className="career-info-in">
+              <div className="career-role">
+                <h4>Foundations & Core CS</h4>
+                <h5>Academics & Community</h5>
+              </div>
+              <h3>ROOTS</h3>
+            </div>
+            <p>
+              Deep grounding in Data Structures, OS, DBMS, Networks, and collaborative
+              engineering through hackathons and university developer societies.
+            </p>
+          </div>
         </div>
       </div>
     </div>

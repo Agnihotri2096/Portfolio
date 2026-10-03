@@ -3,14 +3,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { setSmoother } from "./utils/smoother";
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
 
 const Navbar = () => {
   useEffect(() => {
-    smoother = ScrollSmoother.create({
+    const smootherInstance = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
       content: "#smooth-content",
       smooth: 1.7,
@@ -20,42 +20,61 @@ const Navbar = () => {
       ignoreMobileResize: true,
     });
 
-    smoother.scrollTop(0);
-    smoother.paused(true);
+    setSmoother(smootherInstance);
+    smootherInstance.scrollTop(0);
+    smootherInstance.paused(true);
 
-    let links = document.querySelectorAll(".header ul a");
+    const links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
+      const element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
+          const target = e.currentTarget as HTMLAnchorElement;
+          const section = target.getAttribute("data-href");
+          if (section) {
+            smootherInstance.scrollTo(section, true, "top top");
+          }
         }
       });
     });
-    window.addEventListener("resize", () => {
+
+    const onResize = () => {
       ScrollSmoother.refresh(true);
-    });
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
+
   return (
     <>
-      <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
-          AA
+      <header className="header">
+        <a href="/#" className="navbar-title navbar-brand" data-cursor="disable">
+          <img src="/logo-mark.svg" alt="Agnihotri Labs" className="navbar-logo-img" />
+          <span className="navbar-brand-text">
+            AGNIHOTRI <span className="brand-highlight">LABS</span>
+          </span>
         </a>
+
         <a
-          href="mailto:agnihotriakshat6759@gmail.com"
+          href="mailto:hello@agnihotrilabs.tech"
           className="navbar-connect"
-          data-cursor="disable"
+          data-cursor="email"
         >
-          agnihotriakshat6759@gmail.com
+          hello@agnihotrilabs.tech
         </a>
+
         <ul>
           <li>
             <a data-href="#about" href="#about">
               <HoverLinks text="ABOUT" />
+            </a>
+          </li>
+          <li>
+            <a data-href="#lab" href="#lab">
+              <HoverLinks text="LAB" />
             </a>
           </li>
           <li>
@@ -64,8 +83,8 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a data-href="#agnihotri-labs" href="#agnihotri-labs">
-              <HoverLinks text="LABS" />
+            <a data-href="#services" href="#services">
+              <HoverLinks text="SERVICES" />
             </a>
           </li>
           <li>
@@ -74,7 +93,7 @@ const Navbar = () => {
             </a>
           </li>
         </ul>
-      </div>
+      </header>
 
       <div className="landing-circle1"></div>
       <div className="landing-circle2"></div>

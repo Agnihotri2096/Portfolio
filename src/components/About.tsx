@@ -4,13 +4,13 @@ const About = () => {
   return (
     <div className="about-section" id="about">
       <div className="about-me">
-        <h3 className="title">About Me</h3>
+        <h3 className="title">About The Lab</h3>
         <p className="para">
-          I'm an engineering student passionate about software architecture, algorithms, and computing technologies. I enjoy exploring how systems work and building efficient, scalable solutions through continuous learning and experimentation.
+          Agnihotri Labs is an independent technology studio focused on building practical software, AI systems, automation tools and security-focused technology.
           <br /><br />
-          Beyond academics, I actively participate in hackathons and project teams, valuing collaboration, discipline, and logical problem-solving.
+          The studio is founded and built by Akshat Agnihotri, an engineering student interested in systems, artificial intelligence, software engineering and cybersecurity.
           <br /><br />
-          My goal is to bridge theoretical concepts with real-world applications, constantly pushing boundaries to grow into an innovative and competent software engineer.
+          A space where ideas become experiments, systems and products — bridging theoretical concepts with real-world applications.
         </p>
       </div>
     </div>

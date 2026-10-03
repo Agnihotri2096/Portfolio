@@ -3,8 +3,8 @@
   max-width: var(--cMaxWidth);
   width: var(--cWidth);
   justify-content: space-between;
+  align-items: center;
   padding: 20px 0px;
-  margin-bottom: -100px;
   box-sizing: border-box;
   position: fixed;
   left: 50%;
@@ -12,6 +12,41 @@
   top: 0;
   z-index: 9999;
 }
+
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.9;
+}
+
+.navbar-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(94, 234, 212, 0.4));
+}
+
+.navbar-brand-text {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navbar-brand-text .brand-highlight {
+  color: var(--accentColor);
+  font-weight: 400;
+}
+
 .header ul {
   font-size: 12px;
   display: flex;
@@ -19,65 +54,84 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  column-gap: 40px;
+  column-gap: 24px;
   row-gap: 8px;
-  align-items: end;
+  align-items: flex-end;
 }
+
 .header ul li {
   margin-left: 0px;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   color: #ccc;
   font-weight: 600;
   cursor: pointer;
 }
+
 .navbar-connect {
   position: absolute;
   display: none;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 15px;
-  letter-spacing: 1px;
+  font-size: 13px;
+  letter-spacing: 1.2px;
   font-weight: 500;
+  color: #94a3b8;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 14, 23, 0.4);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
 }
-.navbar-title {
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.2px;
+
+.navbar-connect:hover {
+  color: var(--accentColor);
+  border-color: rgba(94, 234, 212, 0.3);
+  box-shadow: 0 0 16px rgba(94, 234, 212, 0.15);
 }
-@media only screen and (min-width: 500px) {
+
+@media only screen and (min-width: 600px) {
   .header {
-    padding: 20px 0px;
+    padding: 22px 0px;
   }
   .header ul {
     flex-direction: row;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
+    column-gap: 28px;
   }
   .header ul li {
     color: #eae5ec;
   }
-  .navbar-title {
-    font-size: 16px;
+  .navbar-logo-img {
+    width: 32px;
+    height: 32px;
+  }
+  .navbar-brand-text {
+    font-size: 15px;
   }
 }
-@media only screen and (min-width: 900px) {
+
+@media only screen and (min-width: 1024px) {
   .navbar-connect {
     display: block;
   }
+  .header ul {
+    column-gap: 40px;
+    font-size: 14px;
+  }
 }
-@media only screen and (min-width: 1200px) {
+
+@media only screen and (min-width: 1280px) {
   .header {
-    padding: 35px 0px;
+    padding: 30px 0px;
   }
   .header ul {
-    column-gap: 80px;
-    font-size: 16px;
+    column-gap: 52px;
+    font-size: 14.5px;
   }
-  .navbar-connect {
+  .navbar-brand-text {
     font-size: 16px;
-  }
-  .navbar-title {
-    font-size: 18px;
   }
 }

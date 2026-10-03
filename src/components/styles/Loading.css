@@ -216,7 +216,23 @@
 .loader-title {
   font-weight: 700;
   font-size: 14px;
-  letter-spacing: 0.2px;
+  letter-spacing: 1.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--backgroundColor);
+  text-decoration: none;
+}
+
+.loader-logo-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.loader-title strong {
+  color: #0d9488;
+  font-weight: 500;
 }
 
 @keyframes blink {
