@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Magnetic from "../Magnetic";
-import { MdArrowDownward } from "react-icons/md";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,13 +28,13 @@ export const Hero: React.FC = () => {
         gsap.set(secondText.current, { xPercent: xPercentRef.current });
       }
 
-      xPercentRef.current += 0.06 * directionRef.current;
+      xPercentRef.current += 0.065 * directionRef.current;
       animationFrameId = requestAnimationFrame(animate);
     };
 
     animationFrameId = requestAnimationFrame(animate);
 
-    // Scroll trigger to accelerate and sync with scroll
+    // Scroll trigger to accelerate and sync with scroll direction
     const trigger = ScrollTrigger.create({
       trigger: document.documentElement,
       start: 0,
@@ -62,7 +61,7 @@ export const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="ds-hero">
-      {/* Top Location & Role Information */}
+      {/* Top Location & Dennis Snellenberg Header Arrow/Role Layout */}
       <div className="ds-hero-top-info">
         <div className="ds-hero-location">
           <svg
@@ -78,32 +77,64 @@ export const Hero: React.FC = () => {
             <line x1="2" y1="12" x2="22" y2="12" />
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
           </svg>
-          <span>Located in India • Available Worldwide</span>
+          <div className="ds-hero-location-text">
+            <span>Located</span>
+            <span>in India</span>
+          </div>
         </div>
 
-        <Magnetic strength={0.3}>
-          <button
-            type="button"
-            onClick={scrollToWork}
-            className="ds-pill-button"
-            style={{ cursor: "pointer", border: "1px solid rgba(28,29,32,0.15)" }}
-            aria-label="Scroll to Work"
-          >
-            <div className="ds-pill-fill" />
-            <span>Explore Work</span>
-            <MdArrowDownward size={16} />
-          </button>
-        </Magnetic>
+        {/* Dennis Snellenberg Signature Arrow & Role Tag */}
+        <div className="ds-hero-role-wrapper">
+          <div className="ds-hero-role-arrow">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M1 13L13 1M13 1H4M13 1V10" />
+            </svg>
+          </div>
+          <h4 className="ds-hero-role-title">
+            <span>Systems Engineer</span> &amp; AI Architect
+          </h4>
+        </div>
       </div>
 
-      {/* Central Portrait Visual */}
-      <div className="ds-hero-portrait-wrapper">
-        <div className="ds-hero-portrait-frame">
-          <img
-            src="/images/brand-logo.jpg"
-            alt="Akshat Agnihotri / Agnihotri Labs"
-            className="ds-hero-portrait-img"
-          />
+      {/* Centerpiece Minimalist Editorial Headline (Replaces photo) */}
+      <div className="ds-hero-center-editorial">
+        <div className="ds-hero-brand-callout">
+          <span className="ds-hero-dot" />
+          <span>Agnihotri Labs • Build. Automate. Secure.</span>
+        </div>
+        <h1 className="ds-hero-center-heading">
+          Engineering Intelligent Systems<br />
+          &amp; Interactive Platforms.
+        </h1>
+        <div className="ds-hero-cta-line">
+          <Magnetic strength={0.35}>
+            <button
+              type="button"
+              onClick={scrollToWork}
+              className="ds-pill-button"
+              aria-label="Scroll to Work"
+            >
+              <div className="ds-pill-fill" />
+              <span>Explore Selected Work</span>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path d="M6 1v10M6 11l4-4M6 11L2 7" />
+              </svg>
+            </button>
+          </Magnetic>
         </div>
       </div>
 
@@ -111,10 +142,10 @@ export const Hero: React.FC = () => {
       <div className="ds-hero-slider-wrap">
         <div ref={slider} className="ds-hero-slider">
           <p ref={firstText} className="ds-hero-slider-text">
-            Akshat Agnihotri — Systems Engineer & Designer —&nbsp;
+            Akshat Agnihotri — Systems Engineer &amp; Designer —&nbsp;
           </p>
           <p ref={secondText} className="ds-hero-slider-text">
-            Akshat Agnihotri — Systems Engineer & Designer —&nbsp;
+            Akshat Agnihotri — Systems Engineer &amp; Designer —&nbsp;
           </p>
         </div>
       </div>

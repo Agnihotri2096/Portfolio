@@ -2,17 +2,17 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const slider1 = [
-  { color: "#22252a", src: "/images/cyberrisk-iq.png", alt: "CyberRisk IQ" },
-  { color: "#1e2229", src: "/images/Maxlife.png", alt: "Maxlife" },
-  { color: "#212224", src: "/images/radix.png", alt: "Radix" },
-  { color: "#1a1d20", src: "/images/cse-society.png", alt: "CSE Society" },
+  { color: "#e3e5e7", src: "/images/cyberrisk-iq.png", alt: "CyberRisk IQ" },
+  { color: "#d6d7dc", src: "/images/Maxlife.png", alt: "Maxlife" },
+  { color: "#e3e3e3", src: "/images/radix.png", alt: "Radix" },
+  { color: "#21242b", src: "/images/cse-society.png", alt: "CSE Society" },
 ];
 
 const slider2 = [
-  { color: "#202327", src: "/images/prithvipath.png", alt: "PrithviPath" },
-  { color: "#24272c", src: "/images/Solidx.png", alt: "Solidx" },
-  { color: "#1d2024", src: "/images/bond.png", alt: "Bond" },
-  { color: "#191a1d", src: "/images/preview.png", alt: "NetSonar" },
+  { color: "#d4e3ec", src: "/images/prithvipath.png", alt: "PrithviPath" },
+  { color: "#e5e0e1", src: "/images/Solidx.png", alt: "Solidx" },
+  { color: "#d7d4cf", src: "/images/bond.png", alt: "Bond" },
+  { color: "#e1dad6", src: "/images/preview.png", alt: "NetSonar" },
 ];
 
 export const SlidingImages: React.FC = () => {
