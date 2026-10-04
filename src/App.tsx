@@ -1,8 +1,7 @@
-import BoilerApp from "./components/BoilerLab/BoilerApp";
-import "./App.css";
+import DennisApp from "./components/DennisSnellenberg/DennisApp";
 
 const App = () => {
-  return <BoilerApp />;
+  return <DennisApp />;
 };
 
 export default App;
