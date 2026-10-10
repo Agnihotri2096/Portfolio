@@ -42,7 +42,7 @@ const labModules = {
 };
 
 function Mark() { return <span className="mark" aria-hidden="true"><i /><i /><i /></span>; }
-function SectionLabel({ children, number }: { children: string; number: string }) { return <div className="section-label"><span>{number}</span><span>{children}</span></div>; }
+function SectionLabel({ children, number }: { children: string; number: string }) { return <motion.div className="section-label" initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .7 }} transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}><span>{number}</span><span>{children}</span></motion.div>; }
 function Arrow() { return <span aria-hidden="true">↗</span>; }
 
 function NodeMap() {
@@ -73,7 +73,7 @@ function App() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => { setScrolled(window.scrollY > 24); const ids = ["studio", "work", "lab", "capabilities", "contact"]; const current = ids.find((id) => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top > -180 && el.getBoundingClientRect().top < 340; }); if (current) setActiveSection(current); };
+    const onScroll = () => { setScrolled(window.scrollY > 24); const max = document.documentElement.scrollHeight - window.innerHeight; document.documentElement.style.setProperty("--scroll-progress", `${max > 0 ? window.scrollY / max : 0}`); const ids = ["studio", "work", "lab", "capabilities", "contact"]; const current = ids.find((id) => { const el = document.getElementById(id); return el && el.getBoundingClientRect().top > -180 && el.getBoundingClientRect().top < 340; }); if (current) setActiveSection(current); };
     window.addEventListener("scroll", onScroll, { passive: true }); return () => window.removeEventListener("scroll", onScroll);
   }, []);
   useEffect(() => { const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { setMenuOpen(false); setSelectedProject(null); } }; window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey); }, []);
@@ -83,7 +83,7 @@ function App() {
   const scrollTo = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); };
 
   return <div className="site-shell">
-    <div className="grid-bg" /><div className="grain" />
+    <div className="grid-bg" /><div className="grain" /><div className="scroll-progress" aria-hidden="true" />
     <header className={`nav ${scrolled ? "nav-scrolled" : ""}`}><button className="brand" onClick={() => scrollTo("top")}><Mark /><span>AGNIHOTRI<br /><b>LABS</b></span></button><nav className={menuOpen ? "open" : ""}>{nav.map((id) => <button key={id} className={activeSection === id ? "active" : ""} onClick={() => scrollTo(id)}>{id === "studio" ? "STUDIO" : id.toUpperCase()}</button>)}</nav><div className="nav-status"><span className="live-dot" /> LAB STATUS: ACTIVE</div><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? "×" : "☰"}</button></header>
 
     <main id="top">
@@ -111,6 +111,6 @@ function App() {
   </div>;
 }
 
-function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void }) { return <motion.article className={`project-card ${project.tone}`} whileHover={{ y: -5 }} tabIndex={0} onClick={onOpen} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onOpen(); }}><div className="project-preview"><div className="preview-top"><span>{project.no} / {project.category.split(" /")[0]}</span><span className="live-dot" /></div><div className="preview-graphic">{project.tone === "teal" ? <><div className="risk-ring">72<small>RISK</small></div><div className="mini-bars"><i /><i /><i /><i /></div></> : project.tone === "blue" ? <><div className="wave">{Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ height: `${20 + ((i * 23) % 72)}%` }} />)}</div><span className="packet">TCP&nbsp; 184.22.4.16</span></> : <><div className="terminal"><span>model / llama3.2</span><b>▮▮▮ ready</b><small>private runtime / local</small></div></>}</div><span className="preview-label">ILLUSTRATIVE PREVIEW</span></div><div className="project-info"><span className="project-number">{project.no}</span><div><div className="project-status"><span className="live-dot" /> {project.status}</div><h3>{project.name}</h3><p>{project.description}</p><div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><button className="text-link" onClick={(e) => { e.stopPropagation(); onOpen(); }}>VIEW DETAILS <Arrow /></button></div></div></motion.article>; }
+function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void }) { return <motion.article className={`project-card ${project.tone}`} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .7, ease: [0.22, 1, 0.36, 1] }} whileHover={{ y: -8 }} tabIndex={0} onClick={onOpen} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onOpen(); }}><div className="project-preview"><div className="preview-top"><span>{project.no} / {project.category.split(" /")[0]}</span><span className="live-dot" /></div><div className="preview-graphic">{project.tone === "teal" ? <><div className="risk-ring">72<small>RISK</small></div><div className="mini-bars"><i /><i /><i /><i /></div></> : project.tone === "blue" ? <><div className="wave">{Array.from({ length: 18 }).map((_, i) => <i key={i} style={{ height: `${20 + ((i * 23) % 72)}%` }} />)}</div><span className="packet">TCP&nbsp; 184.22.4.16</span></> : <><div className="terminal"><span>model / llama3.2</span><b>▮▮▮ ready</b><small>private runtime / local</small></div></>}</div><span className="preview-label">ILLUSTRATIVE PREVIEW</span></div><div className="project-info"><span className="project-number">{project.no}</span><div><div className="project-status"><span className="live-dot" /> {project.status}</div><h3>{project.name}</h3><p>{project.description}</p><div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><button className="text-link" onClick={(e) => { e.stopPropagation(); onOpen(); }}>VIEW DETAILS <Arrow /></button></div></div></motion.article>; }
 
 export default App;
