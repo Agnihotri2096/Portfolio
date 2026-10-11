@@ -6,7 +6,7 @@ import StudioDetails from './StudioDetails';
 import './studio.css';
 
 export function Brand() {
-  return <a className="brand" href="#home" aria-label="Agnihotri Labs home"><span className="brand-mark" aria-hidden="true">a<span>.</span></span><span>agnihotri<span className="brand-labs">labs</span></span></a>;
+  return <a className="brand" href="#home" aria-label="Agnihotri Labs home"><img className="brand-logo" src="/agnihotri-labs-logo.png" alt="" /><span>agnihotri<span className="brand-labs">labs</span></span></a>;
 }
 
 export default function Studio() {
