@@ -1,81 +1,59 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import "./App.css";
 
-type AppId = "home" | "projects" | "lab" | "terminal" | "files" | "technology" | "about" | "contact" | "settings";
-type WindowState = { id: AppId; minimized: boolean; maximized: boolean; z: number };
-
-const apps: { id: AppId; label: string; glyph: string }[] = [
-  { id: "home", label: "Home", glyph: "⌂" }, { id: "projects", label: "Projects", glyph: "▦" }, { id: "lab", label: "Live Lab", glyph: "◌" },
-  { id: "terminal", label: "Terminal", glyph: "›_" }, { id: "files", label: "Files", glyph: "▱" }, { id: "technology", label: "Technology", glyph: "◇" },
-  { id: "about", label: "About", glyph: "◎" }, { id: "contact", label: "Contact", glyph: "@" }, { id: "settings", label: "Settings", glyph: "⚙" },
-];
 const projects = [
-  { name: "CYBERRISK IQ", category: "Cybersecurity / Risk Intelligence", status: "IN DEVELOPMENT", text: "An AI-assisted cyber risk platform connecting vulnerability findings, asset criticality, financial exposure, and risk-reduction priorities.", tags: ["CVSS", "NVD", "GROUNDED AI"] },
-  { name: "NETSONAR", category: "Networking / Audio Experiment", status: "EXPERIMENTAL", text: "An experimental application that translates network traffic activity into sound, exploring a different way to experience network behavior.", tags: ["PYTHON", "SCAPY", "PIPEWIRE"] },
-  { name: "LOCAL AI WORKBENCH", category: "Artificial Intelligence", status: "RESEARCH / EXPERIMENTATION", text: "Experiments with locally hosted language models and AI-assisted workflows.", tags: ["OLLAMA", "PYTHON", "LOCAL MODELS"] },
+  { name: "CyberRisk IQ", type: "AI / SECURITY", status: "In Development", description: "An AI-assisted cyber risk platform connecting vulnerability intelligence, asset criticality, financial risk estimation, and security investment optimization.", tools: ["Python", "FastAPI", "NVD", "AI"] },
+  { name: "NetSonar", type: "NETWORKING / AUDIO", status: "Experimental", description: "An experimental project exploring how network traffic can be translated into sound using packet analysis and audio mapping.", tools: ["Python", "Scapy", "Linux", "Audio"] },
+  { name: "Local AI Workbench", type: "AI / RESEARCH", status: "Research / Experimentation", description: "An exploration of local language models and grounded AI workflows for useful, private, practical automation.", tools: ["Ollama", "Python", "SQLite", "Linux"] },
 ];
-const tech = { "AI / MACHINE LEARNING": ["Python", "PyTorch", "scikit-learn", "Ollama", "LLMs"], "SOFTWARE ENGINEERING": ["React", "TypeScript", "Next.js", "Node.js", "FastAPI", "SQLite"], "SECURITY / NETWORKING": ["Scapy", "NVD", "CISA KEV", "MITRE ATT&CK"], INFRASTRUCTURE: ["Linux", "Docker", "Git", "Cloudflare", "Vercel"] };
+const capabilities = ["AI Engineering", "Software Development", "Business Automation", "Security-Focused Engineering"];
+const services = ["Web Applications", "AI and Automation", "Custom Software"];
+const technologies = ["Python", "React", "TypeScript", "Next.js", "Node.js", "FastAPI", "SQLite", "Ollama", "Linux", "Docker", "Scapy"];
 
-function AppIcon({ app, onClick, active }: { app: typeof apps[number]; onClick: () => void; active?: boolean }) { return <button className={`dock-app ${active ? "active" : ""}`} onClick={onClick} aria-label={app.label} title={app.label}><span>{app.glyph}</span>{active && <i />}</button>; }
-function Window({ app, state, focus, minimize, maximize, close, children }: { app: typeof apps[number]; state: WindowState; focus: () => void; minimize: () => void; maximize: () => void; close: () => void; children: React.ReactNode }) { return <motion.section drag={!state.maximized && !state.minimized} dragMomentum={false} dragElastic={0.04} whileDrag={{ scale: 1.006 }} onDragStart={() => { focus(); }} onDragEnd={() => {}} className={`os-window ${state.maximized ? "maximized" : ""} ${state.minimized ? "is-minimized" : ""}`} style={{ zIndex: state.z }} initial={{ opacity: 0, scale: .96, y: 12 }} animate={{ opacity: state.minimized ? 0 : 1, scale: state.minimized ? .84 : 1, y: state.minimized ? 120 : 0 }} transition={{ opacity: { duration: .18 }, scale: { duration: .22, ease: [0.22, 1, 0.36, 1] }, y: { duration: .22, ease: [0.22, 1, 0.36, 1] } }} exit={{ opacity: 0, scale: .96, y: 12 }} onPointerDownCapture={focus} aria-label={`${app.label} window`}><header className="window-bar"><div className="traffic"><button onClick={close} aria-label="Close">×</button><button onClick={minimize} aria-label="Minimize">−</button><button onClick={maximize} aria-label="Maximize">+</button></div><span>{app.glyph} &nbsp; {app.label}</span><small>AGNI OS</small></header><div className="window-body">{children}</div></motion.section>; }
+function SectionLabel({ children }: { children: string }) { return <div className="section-label"><span>✳</span>{children}</div>; }
+function Arrow() { return <span className="arrow" aria-hidden="true">↗</span>; }
 
-function Home({ open }: { open: (id: AppId) => void }) { return <div className="home-app"><div className="home-kicker">AGNIHOTRI LABS / AGNI OS 1.0</div><h1>BUILD.<br /><em>AUTOMATE.</em><br />SECURE.</h1><p className="home-lede">An independent technology studio building AI systems, software applications, automation tools, and security-focused technology.</p><div className="home-actions"><button className="primary" onClick={() => open("projects")}>OPEN PROJECTS <b>↗</b></button><button onClick={() => open("lab")}>EXPLORE LIVE LAB <b>↗</b></button></div><div className="home-grid"><span>STUDIO<strong>AGNIHOTRI LABS</strong></span><span>DISCIPLINES<strong>04 CORE AREAS</strong></span><span>ENVIRONMENT<strong>AGNI OS</strong></span></div></div> }
-function Projects() { const [query, setQuery] = useState(""); const [selected, setSelected] = useState(0); const visible = projects.filter(p => `${p.name} ${p.category}`.toLowerCase().includes(query.toLowerCase())); return <div className="app-content"><div className="app-heading"><div><span className="eyebrow">WORKSPACE / 01</span><h2>Selected projects</h2></div><input placeholder="Search projects..." value={query} onChange={e => setQuery(e.target.value)} /></div><div className="project-layout"><div className="project-list">{visible.map((p, i) => <button className={selected === i ? "selected" : ""} key={p.name} onClick={() => setSelected(i)}><span>0{i + 1}</span><b>{p.name}</b><small>{p.status}</small></button>)}</div><article className="project-detail"><span className="eyebrow">{visible[selected]?.category ?? "NO RESULT"}</span><h3>{visible[selected]?.name ?? "No project found"}</h3><p>{visible[selected]?.text}</p><div className="tags">{visible[selected]?.tags.map(t => <span key={t}>{t}</span>)}</div><div className="detail-note">ILLUSTRATIVE PROJECT DATA<br /><strong>Current state: {visible[selected]?.status}</strong></div></article></div></div> }
-function Lab() { const [tab, setTab] = useState("CYBERRISK IQ"); const [paused, setPaused] = useState(false); return <div className="app-content"><div className="app-heading"><div><span className="eyebrow">EXPERIMENTS / DEMO DATA</span><h2>Live lab</h2></div><span className="demo-pill">● SIMULATED</span></div><div className="lab-tabs">{["CYBERRISK IQ", "NETSONAR", "LOCAL AI"].map(t => <button className={tab === t ? "selected" : ""} onClick={() => setTab(t)} key={t}>{t}</button>)}</div><div className="lab-panel"><div className="signal"><div className="signal-label">{tab === "NETSONAR" ? "PACKET ACTIVITY" : tab === "LOCAL AI" ? "MODEL PROCESSING" : "RISK SIGNAL"}</div><div className={`bars ${paused ? "paused" : ""}`}>{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ height: `${18 + (i * 29) % 70}%`, animationDelay: `${i * -.09}s` }} />)}</div><button className="primary small" onClick={() => setPaused(!paused)}>{paused ? "RESUME" : "PAUSE"} STREAM</button></div><div className="lab-readout"><div><span>STATUS</span><b>{paused ? "PAUSED" : "RUNNING"}</b></div><div><span>RUNTIME</span><b>LOCAL DEMO</b></div><div><span>PROTOCOL</span><b>{tab === "NETSONAR" ? "TCP / UDP / ICMP" : "SIGNAL MAP"}</b></div></div></div></div> }
-function Terminal() { const [lines, setLines] = useState(["AGNI OS terminal / safe simulation", "Type 'help' to see available commands."]); const [input, setInput] = useState(""); const run = () => { const c = input.trim().toLowerCase(); const output: Record<string, string> = { help: "help  about  projects  services  stack  contact  whoami  neofetch  date  clear", whoami: "akshat@agni-labs — founder / engineer", about: "Agnihotri Labs builds useful AI, software, automation, and security tools.", projects: "CyberRisk IQ · NetSonar · Local AI Workbench", services: "Software engineering · AI systems · Automation · Security", stack: "React · TypeScript · Python · Linux · Docker", contact: "hello@agnihotrilabs.tech", neofetch: "   AGNI OS\n   BUILD. AUTOMATE. SECURE.\n   independent technology studio", date: new Date().toString() }; if (c === "clear") setLines([]); else setLines(l => [...l, `akshat@agni-labs:~$ ${input}`, output[c] ?? `command not found: ${c}`]); setInput(""); }; return <div className="terminal-app" onClick={() => document.getElementById("terminal-input")?.focus()}>{lines.map((l, i) => <div key={i}>{l}</div>)}<div className="terminal-line"><span>akshat@agni-labs:~$</span><input id="terminal-input" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && run()} autoFocus /></div></div> }
-function Technology() { const [tab, setTab] = useState<keyof typeof tech>("AI / MACHINE LEARNING"); return <div className="app-content"><span className="eyebrow">SYSTEM / STACK</span><h2>Technology explorer</h2><div className="tech-layout"><nav>{Object.keys(tech).map(t => <button className={tab === t ? "selected" : ""} onClick={() => setTab(t as keyof typeof tech)} key={t}>{t}</button>)}</nav><div className="tech-grid">{tech[tab].map((x, i) => <motion.div layout key={x}><span>0{i + 1}</span><b>{x}</b><small>RELEVANT TO STUDIO WORK</small></motion.div>)}</div></div></div> }
-function About() { return <div className="app-content text-app"><span className="eyebrow">IDENTITY / 04</span><h2>About Agnihotri Labs</h2><p className="large">An independent technology studio focused on practical AI, software engineering, automation, and security-focused technology.</p><p>I build and experiment across software engineering, artificial intelligence, automation, cybersecurity, and network intelligence. Agnihotri Labs is where those experiments become practical tools and ideas worth developing further.</p><a href="https://github.com/Agnihotri-Labs" target="_blank" rel="noreferrer" className="inline-link">GITHUB ORGANIZATION ↗</a></div> }
-function Contact() { const [copied, setCopied] = useState(false); return <div className="app-content text-app"><span className="eyebrow">COMMUNICATION / 05</span><h2>Have a problem<br /><em>worth solving?</em></h2><p className="large">Have a project idea, a workflow that needs automation, or a technical challenge worth exploring? Let&apos;s discuss what can be built.</p><div className="contact-links"><a className="primary" href="mailto:hello@agnihotrilabs.tech">EMAIL THE STUDIO ↗</a><button onClick={() => { navigator.clipboard?.writeText("hello@agnihotrilabs.tech"); setCopied(true); }}>{copied ? "COPIED" : "COPY EMAIL"}</button></div></div> }
-function Files() { return <div className="app-content"><span className="eyebrow">FILESYSTEM / HOME</span><h2>/home/agni/</h2><div className="file-grid">{["About.md", "Services.md", "Technology.md", "Contact.txt", "README.md", "Projects/"] .map((x, i) => <button key={x}><span>{i === 5 ? "▱" : "◫"}</span>{x}<small>{i === 5 ? "DIRECTORY" : "DOCUMENT"}</small></button>)}</div></div> }
-function Settings({ reduced, setReduced }: { reduced: boolean; setReduced: (v: boolean) => void }) { return <div className="app-content settings-app"><span className="eyebrow">SYSTEM / PREFERENCES</span><h2>Settings</h2><label><span>Animation</span><button className={`switch ${reduced ? "on" : ""}`} onClick={() => setReduced(!reduced)}><i /></button></label><label><span>Wallpaper</span><b>ABSTRACT GRAPHITE</b></label><label><span>Sound effects</span><b>DISABLED</b></label></div> }
+export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeProject, setActiveProject] = useState(0);
+  const scrollTo = (id: string) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); };
+  return <div className="site-shell">
+    <header className="site-header">
+      <a className="brand" href="#top" onClick={() => scrollTo("top")}><span className="brand-mark">A</span><span>AGNIHOTRI<br />LABS</span></a>
+      <button className={`menu-toggle ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation"><span /><span /></button>
+      <nav className={menuOpen ? "nav-open" : ""} aria-label="Main navigation">
+        <a href="#work" onClick={() => scrollTo("work")}>Work</a><a href="#studio" onClick={() => scrollTo("studio")}>Studio</a><a href="#services" onClick={() => scrollTo("services")}>Services</a><a href="#contact" onClick={() => scrollTo("contact")}>Contact</a>
+      </nav>
+      <a className="header-cta" href="mailto:hello@agnihotrilabs.tech">Start a project <Arrow /></a>
+    </header>
 
-function GraphiteScene({ reduced }: { reduced: boolean }) {
-  const group = useRef<THREE.Group>(null);
-  const target = useRef({ x: 0, y: 0 });
-  useFrame((state, delta) => {
-    target.current.x = state.pointer.x * 0.18;
-    target.current.y = state.pointer.y * 0.1;
-    if (group.current && !reduced) {
-      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, target.current.x, 2.2, delta);
-      group.current.rotation.x = THREE.MathUtils.damp(group.current.rotation.x, -target.current.y, 2.2, delta);
-      group.current.position.x = THREE.MathUtils.damp(group.current.position.x, target.current.x * 0.45, 2.2, delta);
-    }
-  });
-  return <group ref={group} position={[0, 0, -2]}>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.8, 0]} receiveShadow>
-      <planeGeometry args={[18, 12, 1, 1]} />
-      <meshStandardMaterial color="#111a20" roughness={0.92} metalness={0.2} />
-    </mesh>
-    <mesh position={[2.5, 0.65, -1.2]} rotation={[0.1, -0.45, 0.16]}>
-      <icosahedronGeometry args={[2.8, 1]} />
-      <meshStandardMaterial color="#182d32" roughness={0.68} metalness={0.5} flatShading />
-    </mesh>
-    <mesh position={[-3.4, 1.7, -2.4]} rotation={[0.25, 0.4, -0.18]}>
-      <torusGeometry args={[2.1, 0.012, 8, 64]} />
-      <meshBasicMaterial color="#64e8ce" transparent opacity={0.18} />
-    </mesh>
-    <gridHelper args={[16, 16, "#25444a", "#16272c"]} position={[0, -1.72, -0.2]} rotation={[0, 0, 0]} />
-  </group>;
-}
+    <main id="top">
+      <section className="hero section-wrap">
+        <motion.div className="hero-copy" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }}>
+          <SectionLabel>INDEPENDENT TECHNOLOGY STUDIO</SectionLabel>
+          <h1>We build<br /><em>useful</em><br />technology.</h1>
+          <p>AI systems, software applications, and practical automation engineered to solve real problems.</p>
+          <div className="hero-actions"><button className="button button-dark" onClick={() => scrollTo("work")}>Explore projects <Arrow /></button><a className="text-link" href="mailto:hello@agnihotrilabs.tech">Discuss a project <Arrow /></a></div>
+        </motion.div>
+        <motion.div className="hero-art" initial={{ opacity: 0, scale: .9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: .2, duration: .9 }} aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="orbit orbit-three" /><div className="art-core">A<span>/</span>L</div><div className="art-caption">BUILD.<br />AUTOMATE.<br />SECURE.</div></motion.div>
+      </section>
 
-function GraphiteWallpaper({ reduced }: { reduced: boolean }) {
-  return <div className="wallpaper wallpaper-3d" aria-hidden="true">
-    <Canvas dpr={[1, 1.25]} camera={{ position: [0, 0.8, 8], fov: 42 }} frameloop={reduced ? "never" : "always"} gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }} performance={{ min: 0.65, debounce: 200 }} fallback={<div className="wallpaper-fallback" />}>
-      <color attach="background" args={["#080b10"]} />
-      <fog attach="fog" args={["#080b10", 5, 14]} />
-      <ambientLight intensity={0.45} color="#9cb9bd" />
-      <directionalLight position={[3, 5, 4]} intensity={2.2} color="#bfe7e2" />
-      <pointLight position={[4, 2, 1]} intensity={8} distance={10} color="#55d9c4" />
-      <GraphiteScene reduced={reduced} />
-    </Canvas>
-    <div className="wallpaper-vignette" />
-    <div className="wallpaper-grain" />
+      <section id="studio" className="intro section-wrap two-col"><SectionLabel>01 / THE STUDIO</SectionLabel><div><h2>Technology should make<br /><em>things clearer.</em></h2><p>Agnihotri Labs is an independent technology studio focused on AI engineering, software development, automation, and security-conscious engineering.</p><p>We work from first principles, turning complex problems into focused systems that are useful, understandable, and built to last.</p></div></section>
+
+      <section id="work" className="work section-wrap"><div className="section-heading"><SectionLabel>02 / SELECTED WORK</SectionLabel><span>Projects in progress</span></div><div className="project-grid"><div className="project-index">{projects.map((project, index) => <button className={activeProject === index ? "active" : ""} onClick={() => setActiveProject(index)} key={project.name}><span>0{index + 1}</span><b>{project.name}</b><Arrow /></button>)}</div><motion.article className="project-feature" key={projects[activeProject].name} initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .35 }}><div className="feature-top"><span>{projects[activeProject].type}</span><span>{projects[activeProject].status}</span></div><div><h3>{projects[activeProject].name}</h3><p>{projects[activeProject].description}</p></div><div className="tool-list">{projects[activeProject].tools.map(tool => <span key={tool}>{tool}</span>)}</div></motion.article></div></section>
+
+      <section className="capabilities section-wrap"><SectionLabel>03 / CAPABILITIES</SectionLabel><div className="capability-list">{capabilities.map((capability, index) => <div key={capability}><span>0{index + 1}</span><h3>{capability}</h3><Arrow /></div>)}</div></section>
+
+      <section id="services" className="services section-wrap two-col"><SectionLabel>04 / SERVICES</SectionLabel><div><h2>From first idea<br />to <em>working system.</em></h2><div className="service-list">{services.map(service => <div key={service}><span>{service}</span><Arrow /></div>)}</div><a className="button button-light" href="mailto:hello@agnihotrilabs.tech">Talk to the studio <Arrow /></a></div></section>
+
+      <section className="stack section-wrap"><div className="section-heading"><SectionLabel>05 / TECHNOLOGIES</SectionLabel><span>Tools we use to build</span></div><div className="tech-cloud">{technologies.map((technology, index) => <span key={technology} style={{ "--i": index } as React.CSSProperties}>{technology}</span>)}</div></section>
+
+      <section id="contact" className="contact section-wrap"><SectionLabel>06 / CONTACT</SectionLabel><h2>Have a problem<br /><em>worth solving?</em></h2><div className="contact-bottom"><p>Tell us what you are trying to build, automate, or understand.</p><a className="contact-email" href="mailto:hello@agnihotrilabs.tech">hello@agnihotrilabs.tech <Arrow /></a></div></section>
+    </main>
+    <footer className="site-footer"><span>© {new Date().getFullYear()} AGNIHOTRI LABS</span><div><a href="https://github.com/Agnihotri-Labs" target="_blank" rel="noreferrer">GitHub</a><a href="https://agnihotrilabs.tech/" target="_blank" rel="noreferrer">Website</a><a href="mailto:hello@agnihotrilabs.tech">Email</a></div><span>BUILD. AUTOMATE. SECURE.</span></footer>
   </div>;
 }
 
-export default function App() { const [windows, setWindows] = useState<WindowState[]>([{ id: "home", minimized: false, maximized: false, z: 2 }]); const [launcher, setLauncher] = useState(false); const [query, setQuery] = useState(""); const [clock, setClock] = useState(new Date()); const [reduced, setReduced] = useState(() => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches); const [z, setZ] = useState(3); useEffect(() => { const t = setInterval(() => setClock(new Date()), 1000); return () => clearInterval(t); }, []); useEffect(() => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); const sync = () => setReduced(media.matches); media.addEventListener("change", sync); return () => media.removeEventListener("change", sync); }, []); useEffect(() => { const key = (e: KeyboardEvent) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setLauncher(true); } if (e.key === "Escape") setLauncher(false); }; addEventListener("keydown", key); return () => removeEventListener("keydown", key); }, []); const open = (id: AppId) => { setWindows(ws => ws.some(w => w.id === id) ? ws.map(w => w.id === id ? { ...w, minimized: false, z } : w) : [...ws, { id, minimized: false, maximized: false, z }]); setZ(v => v + 1); setLauncher(false); }; const update = (id: AppId, fn: (w: WindowState) => WindowState) => setWindows(ws => ws.map(w => w.id === id ? fn(w) : w)); const current = useMemo(() => apps.filter(a => a.label.toLowerCase().includes(query.toLowerCase())), [query]); return <div className={`os ${reduced ? "reduced" : ""}`}><GraphiteWallpaper reduced={reduced} /><header className="system-panel"><button className="os-brand" onClick={() => setLauncher(true)}><span>∆</span> AGNI OS</button><button className="activities" onClick={() => setLauncher(true)}>Activities</button><time>{clock.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })} &nbsp; {clock.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time><div className="system-status">⌁ &nbsp; ◒ &nbsp; <span>●</span> <button onClick={() => open("settings")}>⚙</button></div></header><main className="desktop"><AnimatePresence>{windows.map(w => { const app = apps.find(a => a.id === w.id)!; return <Window key={w.id} app={app} state={w} focus={() => { setZ(v => v + 1); update(w.id, x => ({ ...x, z })); }} minimize={() => update(w.id, x => ({ ...x, minimized: true }))} maximize={() => update(w.id, x => ({ ...x, maximized: !x.maximized }))} close={() => setWindows(ws => ws.filter(x => x.id !== w.id))}>{w.id === "home" && <Home open={open} />}{w.id === "projects" && <Projects />}{w.id === "lab" && <Lab />}{w.id === "terminal" && <Terminal />}{w.id === "technology" && <Technology />}{w.id === "about" && <About />}{w.id === "contact" && <Contact />}{w.id === "files" && <Files />}{w.id === "settings" && <Settings reduced={reduced} setReduced={setReduced} />}</Window>; })}</AnimatePresence></main><footer className="dock">{apps.map(a => <AppIcon key={a.id} app={a} active={windows.some(w => w.id === a.id && !w.minimized)} onClick={() => open(a.id)} />)}</footer><AnimatePresence>{launcher && <motion.div className="launcher-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLauncher(false)}><motion.div className="launcher" initial={{ y: -16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={e => e.stopPropagation()}><input autoFocus placeholder="Search applications..." value={query} onChange={e => setQuery(e.target.value)} /> <div>{current.map(a => <button key={a.id} onClick={() => open(a.id)}><span>{a.glyph}</span>{a.label}</button>)}</div><small>ESC TO CLOSE · ⌘K TO OPEN</small></motion.div></motion.div>}</AnimatePresence></div> }
-
-export { apps };
+export { projects };
+export const apps = [];
