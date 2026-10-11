@@ -1,4 +1,4 @@
-import DennisApp from "./components/DennisSnellenberg/DennisApp";
+import DennisApp from "./components/Studio/Studio";
 
 const App = () => {
   return <DennisApp />;
