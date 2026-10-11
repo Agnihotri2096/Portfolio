@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 import { AnimatePresence, motion } from "framer-motion";
 import "./App.css";
 
@@ -30,6 +32,50 @@ function Contact() { const [copied, setCopied] = useState(false); return <div cl
 function Files() { return <div className="app-content"><span className="eyebrow">FILESYSTEM / HOME</span><h2>/home/agni/</h2><div className="file-grid">{["About.md", "Services.md", "Technology.md", "Contact.txt", "README.md", "Projects/"] .map((x, i) => <button key={x}><span>{i === 5 ? "▱" : "◫"}</span>{x}<small>{i === 5 ? "DIRECTORY" : "DOCUMENT"}</small></button>)}</div></div> }
 function Settings({ reduced, setReduced }: { reduced: boolean; setReduced: (v: boolean) => void }) { return <div className="app-content settings-app"><span className="eyebrow">SYSTEM / PREFERENCES</span><h2>Settings</h2><label><span>Animation</span><button className={`switch ${reduced ? "on" : ""}`} onClick={() => setReduced(!reduced)}><i /></button></label><label><span>Wallpaper</span><b>ABSTRACT GRAPHITE</b></label><label><span>Sound effects</span><b>DISABLED</b></label></div> }
 
-export default function App() { const [windows, setWindows] = useState<WindowState[]>([{ id: "home", minimized: false, maximized: false, z: 2 }]); const [launcher, setLauncher] = useState(false); const [query, setQuery] = useState(""); const [clock, setClock] = useState(new Date()); const [reduced, setReduced] = useState(false); const [z, setZ] = useState(3); useEffect(() => { const t = setInterval(() => setClock(new Date()), 1000); return () => clearInterval(t); }, []); useEffect(() => { const key = (e: KeyboardEvent) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setLauncher(true); } if (e.key === "Escape") setLauncher(false); }; addEventListener("keydown", key); return () => removeEventListener("keydown", key); }, []); const open = (id: AppId) => { setWindows(ws => ws.some(w => w.id === id) ? ws.map(w => w.id === id ? { ...w, minimized: false, z } : w) : [...ws, { id, minimized: false, maximized: false, z }]); setZ(v => v + 1); setLauncher(false); }; const update = (id: AppId, fn: (w: WindowState) => WindowState) => setWindows(ws => ws.map(w => w.id === id ? fn(w) : w)); const current = useMemo(() => apps.filter(a => a.label.toLowerCase().includes(query.toLowerCase())), [query]); return <div className={`os ${reduced ? "reduced" : ""}`}><div className="wallpaper"><div className="orb orb-one" /><div className="orb orb-two" /><div className="wireframe" /></div><header className="system-panel"><button className="os-brand" onClick={() => setLauncher(true)}><span>∆</span> AGNI OS</button><button className="activities" onClick={() => setLauncher(true)}>Activities</button><time>{clock.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })} &nbsp; {clock.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time><div className="system-status">⌁ &nbsp; ◒ &nbsp; <span>●</span> <button onClick={() => open("settings")}>⚙</button></div></header><main className="desktop"><AnimatePresence>{windows.map(w => { const app = apps.find(a => a.id === w.id)!; return <Window key={w.id} app={app} state={w} focus={() => { setZ(v => v + 1); update(w.id, x => ({ ...x, z })); }} minimize={() => update(w.id, x => ({ ...x, minimized: true }))} maximize={() => update(w.id, x => ({ ...x, maximized: !x.maximized }))} close={() => setWindows(ws => ws.filter(x => x.id !== w.id))}>{w.id === "home" && <Home open={open} />}{w.id === "projects" && <Projects />}{w.id === "lab" && <Lab />}{w.id === "terminal" && <Terminal />}{w.id === "technology" && <Technology />}{w.id === "about" && <About />}{w.id === "contact" && <Contact />}{w.id === "files" && <Files />}{w.id === "settings" && <Settings reduced={reduced} setReduced={setReduced} />}</Window>; })}</AnimatePresence></main><footer className="dock">{apps.map(a => <AppIcon key={a.id} app={a} active={windows.some(w => w.id === a.id && !w.minimized)} onClick={() => open(a.id)} />)}</footer><AnimatePresence>{launcher && <motion.div className="launcher-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLauncher(false)}><motion.div className="launcher" initial={{ y: -16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={e => e.stopPropagation()}><input autoFocus placeholder="Search applications..." value={query} onChange={e => setQuery(e.target.value)} /> <div>{current.map(a => <button key={a.id} onClick={() => open(a.id)}><span>{a.glyph}</span>{a.label}</button>)}</div><small>ESC TO CLOSE · ⌘K TO OPEN</small></motion.div></motion.div>}</AnimatePresence></div> }
+function GraphiteScene({ reduced }: { reduced: boolean }) {
+  const group = useRef<THREE.Group>(null);
+  const target = useRef({ x: 0, y: 0 });
+  useFrame((state, delta) => {
+    target.current.x = state.pointer.x * 0.18;
+    target.current.y = state.pointer.y * 0.1;
+    if (group.current && !reduced) {
+      group.current.rotation.y = THREE.MathUtils.damp(group.current.rotation.y, target.current.x, 2.2, delta);
+      group.current.rotation.x = THREE.MathUtils.damp(group.current.rotation.x, -target.current.y, 2.2, delta);
+      group.current.position.x = THREE.MathUtils.damp(group.current.position.x, target.current.x * 0.45, 2.2, delta);
+    }
+  });
+  return <group ref={group} position={[0, 0, -2]}>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.8, 0]} receiveShadow>
+      <planeGeometry args={[18, 12, 1, 1]} />
+      <meshStandardMaterial color="#111a20" roughness={0.92} metalness={0.2} />
+    </mesh>
+    <mesh position={[2.5, 0.65, -1.2]} rotation={[0.1, -0.45, 0.16]}>
+      <icosahedronGeometry args={[2.8, 1]} />
+      <meshStandardMaterial color="#182d32" roughness={0.68} metalness={0.5} flatShading />
+    </mesh>
+    <mesh position={[-3.4, 1.7, -2.4]} rotation={[0.25, 0.4, -0.18]}>
+      <torusGeometry args={[2.1, 0.012, 8, 64]} />
+      <meshBasicMaterial color="#64e8ce" transparent opacity={0.18} />
+    </mesh>
+    <gridHelper args={[16, 16, "#25444a", "#16272c"]} position={[0, -1.72, -0.2]} rotation={[0, 0, 0]} />
+  </group>;
+}
+
+function GraphiteWallpaper({ reduced }: { reduced: boolean }) {
+  return <div className="wallpaper wallpaper-3d" aria-hidden="true">
+    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0.8, 8], fov: 42 }} frameloop={reduced ? "never" : "always"} fallback={<div className="wallpaper-fallback" />}>
+      <color attach="background" args={["#080b10"]} />
+      <fog attach="fog" args={["#080b10", 5, 14]} />
+      <ambientLight intensity={0.45} color="#9cb9bd" />
+      <directionalLight position={[3, 5, 4]} intensity={2.2} color="#bfe7e2" />
+      <pointLight position={[4, 2, 1]} intensity={8} distance={10} color="#55d9c4" />
+      <GraphiteScene reduced={reduced} />
+    </Canvas>
+    <div className="wallpaper-vignette" />
+    <div className="wallpaper-grain" />
+  </div>;
+}
+
+export default function App() { const [windows, setWindows] = useState<WindowState[]>([{ id: "home", minimized: false, maximized: false, z: 2 }]); const [launcher, setLauncher] = useState(false); const [query, setQuery] = useState(""); const [clock, setClock] = useState(new Date()); const [reduced, setReduced] = useState(false); const [z, setZ] = useState(3); useEffect(() => { const t = setInterval(() => setClock(new Date()), 1000); return () => clearInterval(t); }, []); useEffect(() => { const key = (e: KeyboardEvent) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setLauncher(true); } if (e.key === "Escape") setLauncher(false); }; addEventListener("keydown", key); return () => removeEventListener("keydown", key); }, []); const open = (id: AppId) => { setWindows(ws => ws.some(w => w.id === id) ? ws.map(w => w.id === id ? { ...w, minimized: false, z } : w) : [...ws, { id, minimized: false, maximized: false, z }]); setZ(v => v + 1); setLauncher(false); }; const update = (id: AppId, fn: (w: WindowState) => WindowState) => setWindows(ws => ws.map(w => w.id === id ? fn(w) : w)); const current = useMemo(() => apps.filter(a => a.label.toLowerCase().includes(query.toLowerCase())), [query]); return <div className={`os ${reduced ? "reduced" : ""}`}><GraphiteWallpaper reduced={reduced} /><header className="system-panel"><button className="os-brand" onClick={() => setLauncher(true)}><span>∆</span> AGNI OS</button><button className="activities" onClick={() => setLauncher(true)}>Activities</button><time>{clock.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" })} &nbsp; {clock.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</time><div className="system-status">⌁ &nbsp; ◒ &nbsp; <span>●</span> <button onClick={() => open("settings")}>⚙</button></div></header><main className="desktop"><AnimatePresence>{windows.map(w => { const app = apps.find(a => a.id === w.id)!; return <Window key={w.id} app={app} state={w} focus={() => { setZ(v => v + 1); update(w.id, x => ({ ...x, z })); }} minimize={() => update(w.id, x => ({ ...x, minimized: true }))} maximize={() => update(w.id, x => ({ ...x, maximized: !x.maximized }))} close={() => setWindows(ws => ws.filter(x => x.id !== w.id))}>{w.id === "home" && <Home open={open} />}{w.id === "projects" && <Projects />}{w.id === "lab" && <Lab />}{w.id === "terminal" && <Terminal />}{w.id === "technology" && <Technology />}{w.id === "about" && <About />}{w.id === "contact" && <Contact />}{w.id === "files" && <Files />}{w.id === "settings" && <Settings reduced={reduced} setReduced={setReduced} />}</Window>; })}</AnimatePresence></main><footer className="dock">{apps.map(a => <AppIcon key={a.id} app={a} active={windows.some(w => w.id === a.id && !w.minimized)} onClick={() => open(a.id)} />)}</footer><AnimatePresence>{launcher && <motion.div className="launcher-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLauncher(false)}><motion.div className="launcher" initial={{ y: -16, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={e => e.stopPropagation()}><input autoFocus placeholder="Search applications..." value={query} onChange={e => setQuery(e.target.value)} /> <div>{current.map(a => <button key={a.id} onClick={() => open(a.id)}><span>{a.glyph}</span>{a.label}</button>)}</div><small>ESC TO CLOSE · ⌘K TO OPEN</small></motion.div></motion.div>}</AnimatePresence></div> }
 
 export { apps };
